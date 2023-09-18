@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="app">
 
     <div class="columns">
       <div class="column">
@@ -99,23 +99,39 @@
 
         </div>
         <div class="column">
-            <div class="notification is-success is-light">
-                <button class="delete"></button>
-                 <strong>Congrats!</strong>You've accomplished something.
-              </div>
+            <div class="notification is-light" :class="x.type"  v-for="x in list" v-show="x.open">
+                <button class="delete" @click="x.open = false" ></button>
+                {{ x.msg }}
+            </div>
               
         </div>
     </div>
     
 
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
-        $(function(){
-            $('.delete').click(function(){
-                $(this).closest('.notification').hide();
-            });
-        });
+      
+      const { createApp, ref } = Vue
+
+
+      const app = createApp({
+        setup() {
+          const list = ref([
+            { msg: 'Hello World', open: true, type: 'is-success' },
+            { msg: 'Congrats! You did it', open: true, type: 'is-warning' },
+            { msg: 'You are a Vue3 master', open: true, type: 'is-info' },
+            { msg: 'Oop! You did it again', open: true, type: 'is-danger'},
+          ]);
+          
+          //open.value = false;
+
+          return { list }
+        }
+      })
+      
+      app.mount('#app')
+
     </script>
 </body>
 </html>
