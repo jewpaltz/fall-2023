@@ -18,6 +18,10 @@ concurrency:
 
 jobs:
   build:
+    #environment:
+    #  name: github-pages
+    #  url: ${{ steps.deployment.outputs.page_url }}
+      
     runs-on: ubuntu-latest
     steps:
         - name: Checkout
@@ -38,11 +42,7 @@ jobs:
           run: npm run build
           working-directory: ./client
 
-        - name: Upload artifact
-          uses: actions/upload-pages-artifact@v2
-          with:
-            # Upload the dist directory as a zip file
-            path: './client/dist'
+
   
   deploy:
     environment:
@@ -51,6 +51,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          # Upload the dist directory as a zip file
+          path: './client/dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
