@@ -38,11 +38,18 @@ jobs:
           run: npm run build
           working-directory: ./client
 
+        - name: PWD 1
+          run: pwd
+
+        - name: PWD 2
+          run: pwd
+          working-directory: ./client
+
         - name: Upload artifact
           uses: actions/upload-pages-artifact@v2
           with:
             # Upload the dist directory as a zip file
-            path: './dist'
+            path: './client/dist'
   
   deploy:
     environment:
