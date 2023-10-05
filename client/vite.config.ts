@@ -10,7 +10,7 @@ export default defineConfig({
     vue(),
     vueJsx(),
   ],
-  base: './fall-2023/',
+  base: '/fall-2023/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
