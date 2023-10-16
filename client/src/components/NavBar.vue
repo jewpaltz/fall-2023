@@ -26,6 +26,7 @@ const isActive = ref(false);
       <div class="navbar-start">
         <RouterLink class="navbar-item" to="/" >Home</RouterLink>
         <RouterLink class="navbar-item" to="/about">About</RouterLink>
+        <RouterLink class="navbar-item" to="/products">Products</RouterLink>
         
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
