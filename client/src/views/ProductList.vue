@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getProducts, type Product } from '@/model/products';
+import { addToCart } from '@/model/shoppingCart';
 import { ref } from 'vue'
 
 const products = ref([] as Product[])
@@ -29,7 +30,7 @@ setTimeout(()=> {
         <p>
           <span>$</span>
           <i class="price">{{ product.price }}</i>
-          <button class="button is-success">+</button>
+          <button class="button is-success"  @click.prevent="addToCart(product)" >+</button>
         </p>
       </div>
     </div>

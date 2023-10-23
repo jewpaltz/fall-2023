@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import LoginBadge from './LoginBadge.vue';
 import FlyoutPanel from './FlyoutPanel.vue';
+import ShoppingCart from './ShoppingCart.vue';
 
 const isActive = ref(false);
 const isShoppingCartOpen = ref(false);
@@ -68,7 +69,7 @@ const isShoppingCartOpen = ref(false);
     </div>
   </nav>
   <FlyoutPanel  :class="{ 'is-active': isShoppingCartOpen }">
-    <h1 class="subtitle">Shopping Cart</h1>
+    <ShoppingCart />
   </FlyoutPanel>
 </template>
 
