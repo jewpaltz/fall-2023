@@ -4,6 +4,7 @@ import { RouterLink } from 'vue-router';
 import LoginBadge from './LoginBadge.vue';
 import FlyoutPanel from './FlyoutPanel.vue';
 import ShoppingCart from './ShoppingCart.vue';
+import { count as cartCount } from "@/model/shoppingCart";
 
 const isActive = ref(false);
 const isShoppingCartOpen = ref(false);
@@ -60,6 +61,7 @@ const isShoppingCartOpen = ref(false);
             <span class="icon">
               <i class="fas fa-shopping-cart"></i>
             </span>
+            <i class="tag is-danger is-rounded is-small" v-if="cartCount">{{ cartCount }}</i>
           </a>
         </div>
         <div class="navbar-item">
@@ -75,7 +77,11 @@ const isShoppingCartOpen = ref(false);
 
 
 <style scoped>
-
+.tag.is-small {
+  position: absolute;
+  transform: translate(50%, -30%);
+  font-size: x-small;
+}
 .router-link-active {
   font-weight: bold;
   border-bottom: 2px solid #00d1b2;
