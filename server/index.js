@@ -1,13 +1,18 @@
 // express.js
 
 const express = require('express');
+const productController = require('./controllers/product');
 const app = express();
 
 const PORT = 3000;
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
-});
+})
+.use('/products', productController)
+
+
+
 
 console.log('1: Trying to start server...');
 
