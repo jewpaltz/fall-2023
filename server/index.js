@@ -1,7 +1,7 @@
 // express.js
 
 const express = require('express');
-const productController = require('./controllers/product');
+const productController = require('./controllers/products');
 const app = express();
 
 const PORT = 3000;
