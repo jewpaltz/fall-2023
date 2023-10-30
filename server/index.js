@@ -1,16 +1,22 @@
 // express.js
 
+const path = require('path')
 const express = require('express');
 const productController = require('./controllers/products');
 const app = express();
 
 const PORT = 3000;
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-})
-.use('/products', productController)
+app
+    .use('/', express.static(path.join( __dirname, '../client/dist/') ) )
+    .use(express.json())
 
+    .use('/api/v1/products', productController)
+
+
+    .get('*', (req, res) => {
+        res.sendFile(path.join( __dirname, '../client/dist/index.html') )
+    });
 
 
 
