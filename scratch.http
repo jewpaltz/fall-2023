@@ -13,3 +13,32 @@ http://localhost:3000
 
 ###
 http://localhost:3000/api/v1/products
+
+###
+POST http://localhost:3000/api/v1/products
+Content-Type: application/json
+
+{
+  "id": 101,
+  "title": "Pumpkin",
+  "price": "3.56"
+}
+
+###
+PATCH http://localhost:3000/api/v1/products/101
+Content-Type: application/json
+
+{
+  "title": "Pumpkin Spice Latte",
+  "price": "6.56"
+}
+
+###
+DELETE http://localhost:3000/api/v1/products/31
+
+
+###
+https://newpaltz-fall-2023.onrender.com/api/v1/products/28
+
+
+
