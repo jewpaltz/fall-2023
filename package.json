@@ -6,6 +6,7 @@
   "license": "ISC",
 
   "scripts": {
+    "build": "",
     "start": "node server/index.js",
     "dev": "nodemon --watch ./server server/index.js"
   },
