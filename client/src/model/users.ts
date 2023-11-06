@@ -1,7 +1,7 @@
 /* B"H
 */
 
-import data from "../data/users.json";
+import { api } from "./session";
 
 export interface User {
   id?: number,
@@ -13,10 +13,11 @@ export interface User {
   token?: string
 }
 
-export function getUsers(): User[] {
-  return data.users.map( x => ({ ...x, role: x.id <= 5 ? 'admin' : 'user' }) ) 
+export function getUsers(): Promise< User[]> {
+  return api("users"); 
 }
 
-export function getUserByEmail(email: string): User | undefined {
-  return getUsers().find( x => x.email === email );
+export async function getUserByEmail(email: string): Promise<User | undefined> {
+  const users = await getUsers();
+  return users.find( x => x.email === email );
 }
