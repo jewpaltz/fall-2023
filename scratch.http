@@ -11,6 +11,10 @@ Content-Type: application/json
 ###
 http://localhost:3000
 
+
+/////////////////////////
+// Products
+
 ###
 http://localhost:3000/api/v1/products
 
@@ -19,13 +23,12 @@ POST http://localhost:3000/api/v1/products
 Content-Type: application/json
 
 {
-  "id": 101,
   "title": "Pumpkin",
   "price": "3.56"
 }
 
 ###
-PATCH http://localhost:3000/api/v1/products/101
+PATCH http://localhost:3000/api/v1/products/31
 Content-Type: application/json
 
 {
@@ -41,4 +44,50 @@ DELETE http://localhost:3000/api/v1/products/31
 https://newpaltz-fall-2023.onrender.com/api/v1/products/28
 
 
+/////////////////////////
+// Users
 
+###
+http://localhost:3000/api/v1/users
+
+###
+POST http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "firstName": "Moshe",
+  "lastName": "Plotkin",
+  "email": "plotkinm@newpaltz.edu",
+  "password": "123456"
+}
+
+###
+PATCH http://localhost:3000/api/v1/users/31
+Content-Type: application/json
+
+{
+  "firstName": "Rabbi Moshe"
+}
+
+###
+DELETE http://localhost:3000/api/v1/products/31
+
+###
+POST http://localhost:3000/api/v1/users/register
+Content-Type: application/json
+
+{
+  "firstName": "Moshe",
+  "lastName": "Plotkin",
+  "email": "plotkinm@newpaltz.edu",
+  "password": "12345678"
+}
+
+###
+POST http://localhost:3000/api/v1/users/login
+Content-Type: application/json
+
+{
+  "email": "plotkinm@newpaltz.edu",
+  "password": "12345678"
+}
