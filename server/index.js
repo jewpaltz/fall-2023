@@ -27,6 +27,14 @@ app
         res.sendFile(path.join( __dirname, '../client/dist/index.html') )
     });
 
+app
+    .use((err, req, res, next) => {
+        console.error(err);
+        res
+            .status(err?.status || 500)
+            .json({ message: err?.message || err });
+    })
+
 
 
 console.log('1: Trying to start server...');

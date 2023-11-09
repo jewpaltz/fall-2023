@@ -11,7 +11,11 @@ export function rest(url: string, body?: unknown, method?: string){
         },
         body: body ? JSON.stringify(body) : undefined
     })
-        .then(response => response.json())
+        .then(response => response.ok 
+            ? response.json()
+            : response.json().then(err => Promise.reject(err))
+        )
+
 }
 
 export function api(action: string, body?: unknown, method?: string){
