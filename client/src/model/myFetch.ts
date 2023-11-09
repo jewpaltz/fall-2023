@@ -3,13 +3,19 @@
 
 const API_ROOT = 'http://localhost:3000/api/v1';
 
-export function rest(url: string){
-    return fetch(url)
+export function rest(url: string, body?: unknown, method?: string){
+    return fetch(url, {
+        method: method ?? (body ? "POST" : "GET"),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: body ? JSON.stringify(body) : undefined
+    })
         .then(response => response.json())
 }
 
-export function api(action: string){
-    return rest(`${API_ROOT}/${action}`);
+export function api(action: string, body?: unknown, method?: string){
+    return rest(`${API_ROOT}/${action}`, body, method);
 }
 
 
