@@ -14,12 +14,15 @@ const session = reactive({
   messages: [] as {
     type: string,
     text: string
-  }[]
+  }[],
+  loading: 0
 })
 
 export function api(action: string){
-  showError("api() is deprecated. Use myFetch.api() instead.");
+  session.loading++;
   return myFetch.api(`${action}`)
+    .catch(err=> showError(err))
+    .finally(()=> session.loading--);
 }
 
 export function getSession(){
