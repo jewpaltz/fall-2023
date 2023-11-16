@@ -1,7 +1,7 @@
 /* B"H
 */
 
-const API_ROOT = 'http://localhost:3000/api/v1';
+const API_ROOT = import.meta.env.VITE_API_ROOT as string;
 
 export function rest(url: string, body?: unknown, method?: string){
     return fetch(url, {
