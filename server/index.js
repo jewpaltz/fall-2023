@@ -7,8 +7,6 @@ const productController = require('./controllers/products');
 const userController = require('./controllers/users');
 const app = express();
 
-const mongo = require('./models/mongo');
-
 const PORT = process.env.PORT ?? 3000;
 
 console.log(`The best class at SUNY New Paltz is ${process.env.BEST_CLASS}`);
