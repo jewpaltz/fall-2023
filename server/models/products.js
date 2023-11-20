@@ -35,35 +35,44 @@ async function getAll() {
 }
 
 /**
- * @param {number} id - The product's ID.
+ * @param {string} id - The product's ID.
  */
-function get(id) {
-  return data.products.find((product) => product.id === id);
+async function get(id) {
+  const col = await getCollection();
+  return await col.findOne({ _id: ObjectId(id) });
 }
 
-function getByCategory(category) {
-  return data.products.filter((product) => product.category === category);
+async function getByCategory(category) {
+  const col = await getCollection();
+  return await col.findOne({ category });
+
 }
 
-function search(query) {
-  return data.products.filter((product) => {
-    return (
-      product.title.toLowerCase().includes(query.toLowerCase()) ||
-      product.description.toLowerCase().includes(query.toLowerCase())
-    );
-  });
+async function search(query) {
+  const col = await getCollection();
+  const products = await col.find({
+    $or: [
+      { title: { $regex: query, $options: 'i' } },
+      { description: { $regex: query, $options: 'i' } },
+    ],
+  }).toArray();
+
+  return products;
 }
 
 /**
  * @param {Product} product - The product to create.
- * @returns {Product} The created product.
+ * @returns {Promise<Product>} The created product.
  */
-function create(product) {
+async function create(product) {
   const newProduct = {
     id: data.products.length + 1,
     ...product,
   };
-  data.products.push(newProduct);
+  const col = await getCollection();
+  const result = await col.insertOne(newProduct);
+  newProduct._id = result.insertedId;
+
   return newProduct;
 }
 
@@ -71,30 +80,35 @@ function create(product) {
  * @param {Product} product - The product's data.
  * @returns {Product} The updated product.
  */
-function update(product) {
-  const index = data.products.findIndex(p => p.id === product.id);
-  if(index === -1) {
-    throw new Error('Product not found');
-  }
-  data.products[index] = {
-    ...data.products[index],
-    ...product,
-  };
-  return data.products[index];
+async function update(product) {
+
+  const col = await getCollection();
+  const result = await col.findOneAndUpdate(
+    { _id: ObjectId(product.id) },
+    { $set: product },
+    { returnDocument: 'after' },
+  );
+  return result;
 }
 
 /**
- * @param {number} id - The product's ID.
+ * @param {string} id - The product's ID.
  */
-function remove(id) {
-  const index = data.products.findIndex(p => p.id === id);
-  if(index === -1) {
+async function remove(id) {
+  const col = await getCollection();
+  const result = await col.deleteOne({ _id: ObjectId(id) });
+  if(result.deletedCount === 0) {
     throw new Error('Product not found');
   }
-  data.products.splice(index, 1);
+}
+
+async function seed() {
+  const col = await getCollection();
+
+  await col.insertMany(data.products);
 }
 
 
 module.exports = {
-  getAll, get, getByCategory, search, create, update, remove,
+  getAll, get, getByCategory, search, create, update, remove, getCollection, COLLECTION_NAME, seed
 };

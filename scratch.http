@@ -19,6 +19,9 @@ http://localhost:3000
 http://localhost:3000/api/v1/products
 
 ###
+POST http://localhost:3000/api/v1/products/seed
+
+###
 POST http://localhost:3000/api/v1/products
 Content-Type: application/json
 
