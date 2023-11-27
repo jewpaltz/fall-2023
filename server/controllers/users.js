@@ -35,9 +35,11 @@ router.get('/', (req, res, next) => {
 
 })
 .post('/login', (req, res, next) => {
-    
-    const user = login(req.body.email, req.body.password);
-    res.send(user);
+
+    login(req.body.email, req.body.password)
+    .then(user => {
+        res.send(user);
+    }).catch(next)
 
 })
 .patch('/:id', (req, res, next) => {
