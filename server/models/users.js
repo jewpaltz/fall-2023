@@ -162,7 +162,7 @@ async function  login(email, password) {
     throw new Error('Wrong password');
   }
 
-  const user = { ...item, password: undefined, };
+  const user = { ...item, password: undefined, admin: true};
   const token = await generateJWT(user);
   return { user, token };
 }

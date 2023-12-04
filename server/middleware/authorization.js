@@ -4,13 +4,13 @@
 const usersModel = require('../models/users');
 
 module.exports = {
-  parseAuthorizationToken(req, res, next) {
+  async parseAuthorizationToken(req, res, next) {
     const authHeader = req.headers.authorization;
     const token = authHeader?.split(' ')[1];
     if (!token) {
       return next();
     }
-    const payload = usersModel.verifyJWT(token);
+    const payload = await usersModel.verifyJWT(token);
     req.user = payload;
     next();
   },
