@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { getUsers, type User } from "@/model/users";
-
+import { loadScript } from '@/model/myFetch';
 
 const mapDiv = ref<HTMLElement | null>(null);
 const users = ref<User[]>([]);
 
 async function initMap() {
+  await loadScript("https://maps.googleapis.com/maps/api/js?key=" + import.meta.env.VITE_GOOGLE_API_KEY, "google-maps");
+
   const address = "New Paltz, NY";
   const geocoder = new google.maps.Geocoder();
   const place = await new Promise<google.maps.GeocoderResult[]>((resolve, reject) => {

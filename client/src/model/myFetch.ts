@@ -23,6 +23,17 @@ export function api(action: string, body?: unknown, method?: string, headers?: H
     return rest(`${API_ROOT}/${action}`, body, method, headers);
 }
 
+export function loadScript(url: string, id: string){
+    return new Promise((resolve, reject) => {
+        if(document.getElementById(id)) return resolve(true);
+        const script = document.createElement("script");
+        script.src = url;
+        script.id = id;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+    })
+}
 
 
 /*  Asynchronous patterns in JavaScript
