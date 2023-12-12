@@ -1,57 +1,62 @@
-<script setup lang="ts">
-import { getUsers, type User } from '@/model/users';
-import { ref } from 'vue';
 
-  const newTask = ref('');
-  const tasks = ref([] as { id?: number, text: string, completed: boolean }[] );
+import { KeyboardEvent } from 'react';
+import { useState } from 'react';
+
+export default function HomeView() {
+
+  const [tasks, setTasks] = useState([] as { id?: number, text: string, completed: boolean }[] );
 
   const tabList = ['Current', 'Completed', 'All'];
-  const tabState = ref('Current');
+  const [tabState, setTabState] = useState('Current');
 
-  function addTask() {
-    tasks.value.push({ text: newTask.value, completed: false });
-    newTask.value = '';
-  };
+  function addTask(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key == 'Enter') {
+      const value = e.currentTarget.value;
+      setTasks([ { text: value, completed: false }, ...tasks]); // add new task to the beginning of the list
+      e.currentTarget.value = '';
+    }
+  }
+
+  function toggleTask(index: number) {
+    setTasks(tasks.map((t, i) => i == index ? { ...t, completed: !t.completed } : t));
+  }
 
   const shouldDisplay = (task: { id?: number, text: string, completed: boolean }) =>
-    (tabState.value == 'Current' && !task.completed) ||
-    (tabState.value == 'Completed' && task.completed) ||
-    tabState.value == 'All';
+    (tabState == 'Current' && !task.completed) ||
+    (tabState == 'Completed' && task.completed) ||
+    tabState == 'All';
 
-</script>
-
-<template>
-  <main class="columns is-multiline is-centered">
-    <div class="column is-full">
-      <h1 class="title" >Home</h1>
-      <h2 class="subtitle">
+return (
+  <main className="columns is-multiline is-centered">
+    <div className="column is-full">
+      <h1 className="title" >Home</h1>
+      <h2 className="subtitle">
         Welcome to your Vue.js + TypeScript app
       </h2>
     </div>
 
-    <div class="column is-half-desktop is-centered">
-      <div class="panel is-primary">
-        <p class="panel-heading">
+    <div className="column is-half-desktop is-centered">
+      <div className="panel is-primary">
+        <p className="panel-heading">
           To Do
         </p>
-        <div class="panel-block">
-          <p class="control has-icons-left">
-            <input  class="input" type="text" placeholder="What do you want to do"
-                    @keypress.enter="addTask" v-model="newTask" >
-            <span class="icon is-left">
-              <i class="fas fa-plus" aria-hidden="true"></i>
+        <div className="panel-block">
+          <p className="control has-icons-left">
+            <input className="input" type="text" placeholder="What do you want to do" onKeyDown={addTask}  />
+            <span className="icon is-left">
+              <i className="fas fa-plus" aria-hidden="true"></i>
             </span>
           </p>
         </div>
-        <p class="panel-tabs">
-          <a v-for="tab in tabList" :class="{ 'is-active': tabState == tab}" @click.prevent="tabState = tab">{{ tab }}</a>
+        <p className="panel-tabs">
+          {tabList.map(tab => <a className={ tabState == tab ? 'is-active' : '' } onClick={()=> setTabState(tab)}>{ tab }</a>)}
         </p>
-        <label class="panel-block" v-for="task in tasks" v-show="shouldDisplay(task)">
-          <input type="checkbox" v-model="task.completed">
-          {{ task.text }}
-        </label>
-        <div class="panel-block">
-          <button class="button is-link is-outlined is-fullwidth">
+        {tasks.map((task, i) => shouldDisplay(task) && <label className="panel-block" >
+            <input type="checkbox" checked={task.completed} onChange={()=> toggleTask(i)} />
+            { task.text }
+          </label>)}
+        <div className="panel-block">
+          <button className="button is-link is-outlined is-fullwidth">
             Reset all filters
           </button>
         </div>
@@ -59,4 +64,5 @@ import { ref } from 'vue';
 
     </div>
   </main>
-</template>
+  )
+}
