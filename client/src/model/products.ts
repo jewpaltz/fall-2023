@@ -19,3 +19,7 @@ export interface Product {
 export function getProducts(): Promise<Product[]> {
   return api('products');
 }
+
+export function searchProducts(query: string): Promise<Product[]> {
+  return api(`products/search?q=${query}`);
+}
